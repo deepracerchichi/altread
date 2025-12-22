@@ -11,7 +11,7 @@ const Home = () => {
   return (
     
         <ThemedView style={styles.container}>
-            <ThemedLogo />
+            <ThemedLogo  />
             <ThemedText style={styles.title} title={true} >Home</ThemedText>
             
             <Spacer />
@@ -33,12 +33,14 @@ const Home = () => {
 export default Home
 
 const styles = StyleSheet.create({
+
     container: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         
     },
+    
     link:{
         paddingBottom:19,
         textDecorationLine:'underline'

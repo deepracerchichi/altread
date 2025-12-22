@@ -1,17 +1,19 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet , Text} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import ThemedView from '../../../components/ThemedView'
 import ThemedText from '../../../components/ThemedText'
-import { useLocalSearchParams } from 'expo-router'
+import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useBooks } from '../../../hooks/useBooks'
 import ThemedCard from '../../../components/ThemedCard'
 import Spacer from '../../../components/Spacer'
 import { ThemedLoader } from '../../../components/ThemedLoader'
+import ThemedButton from '../../../components/ThemedButton'
+import { Colors } from '../../../constants/colors'
 const BookDetails = () => {
     const [books, setBooks]= useState(null)
     const {id} = useLocalSearchParams()
     // @ts-ignore
-    const {fetchBookById} = useBooks()
+    const {fetchBookById, deleteBook} = useBooks()
 
     useEffect(
         ()=> {
@@ -32,6 +34,13 @@ const BookDetails = () => {
             </ThemedView>
         )
     }
+    const router = useRouter();
+
+    const handleDelete = async () => {
+        await deleteBook(id)
+        setBooks(null)
+        router.replace('/books')
+    }
 
   return (
     <ThemedView safe={true} style={styles.container}>
@@ -42,6 +51,9 @@ const BookDetails = () => {
             <Spacer height={10}/>
             <ThemedText style={{}}>{books.description}</ThemedText>
         </ThemedCard>
+        <ThemedButton onPress={handleDelete} style={styles.delete}>
+            <Text style={{color: '#fff', textAlign: 'center'}}>Delete Book</Text>
+        </ThemedButton>
     </ThemedView>
   )
 }
@@ -59,5 +71,11 @@ const styles = StyleSheet.create({
     title: {
         fontSize:22,
         marginVertical: 10,
+    },
+    delete: {
+        marginTop: 40,
+        backgroundColor: Colors.warning,
+        width: 200,
+        alignSelf: 'center',
     }
 })

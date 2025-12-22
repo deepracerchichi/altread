@@ -1,18 +1,34 @@
-import { StyleSheet, Text, View, useColorScheme, Image } from 'react-native'
+import { StyleSheet, Text, View, useColorScheme, Image, Dimensions, useWindowDimensions } from 'react-native'
 import React from 'react'
-import DarkLogo from '../assets/img/logo_dark.png'
-import LightLogo from '../assets/img/logo_light.png'
+import DarkLogo from '../assets/img/logo_dark.svg'
+import LightLogo from '../assets/img/logo_light.svg'
+import ThemedView from './ThemedView'
 
 const ThemedLogo = ({...props}) => {
     const colorScheme= useColorScheme()
-    const logo = colorScheme=== 'dark' ? DarkLogo : LightLogo
+    const { width, height } = useWindowDimensions()
+
+    const Logo = colorScheme=== 'dark' ? DarkLogo : LightLogo
   return (
-    <View>
-      <Image source={logo} {...props}/>
-    </View>
+    <ThemedView>
+      
+      <Logo
+              width={width * 0.45}
+              height={height * 0.45}
+              style={styles.image}
+      />
+
+    </ThemedView>
   )
 }
 
 export default ThemedLogo
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  image: {
+    top: 29, // Moved up a bit from previous 180
+    resizeMode: 'contain',
+    alignSelf: 'center',
+    marginBottom: -17,
+  }
+})
