@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, useColorScheme, Image, Dimensions, useWindowDimensions } from 'react-native'
+import { StyleSheet, useColorScheme, useWindowDimensions } from 'react-native'
 import React from 'react'
 import DarkLogo from '../assets/img/logo_dark.svg'
 import LightLogo from '../assets/img/logo_light.svg'
@@ -26,7 +26,7 @@ export default ThemedLogo
 
 const styles = StyleSheet.create({
   image: {
-    top: 29, // Moved up a bit from previous 180
+    justifyContent: 'center',
     resizeMode: 'contain',
     alignSelf: 'center',
     marginBottom: -17,
