@@ -1,4 +1,4 @@
-import { Keyboard, StyleSheet, Text, useColorScheme} from 'react-native'
+import { Keyboard, StyleSheet, Text, useColorScheme, View} from 'react-native'
 import React, { useState } from 'react'
 import ThemedView from '../../components/ThemedView'
 import ThemedText from '../../components/ThemedText'
@@ -9,6 +9,9 @@ import { Colors } from '../../constants/colors'
 import ThemedTextInput from '../../components/ThemedTextInput'
 import { TouchableWithoutFeedback } from 'react-native'
 import { useUser } from '../../hooks/useUser'
+import ThemedBtnText from '../../components/ThemedBtnText'
+import ThemedDesign from '../../components/ThemedDesign'
+import { Fonts } from '../../constants/fonts'
 
 const register = () => {
     const [email, setEmail] = useState('');
@@ -32,46 +35,59 @@ const register = () => {
     
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+
     <ThemedView style={styles.container}>
+        {theme === Colors.dark ?
+            <>
+            <ThemedDesign style={{position: 'absolute', top:-150}}/>
+            <ThemedDesign style={{position: 'absolute', top:-190, left: -90}}/>
+            </>
+            :
+            <ThemedDesign style={{position: 'absolute', top:-70, left: -90}}/>
+            
+        }
         {/* <Spacer /> */}
-        <ThemedText style={styles.title} title={true}>Register  your account</ThemedText>
-        <Spacer />
-        <ThemedTextInput
-            style={{
-                width: '80%', 
-                marginBottom: 20, 
-                backgroundColor: focus ? 'rgba(194, 193, 193, 0.5)' : theme.uiBackground
-            }}
-            placeholder="Email"
-            keyboardType="email-address"
-            onChangeText={setEmail}
-            onFocus={() => setFocus(true)}    // ← This!
-            onBlur={() => setFocus(false)}     // ← And this!
-            value={email}
-        />
-         <ThemedTextInput
-            style={{
-                width: '80%', 
-                marginBottom: 20, 
-                backgroundColor: focusp ? 'rgba(194, 193, 193, 0.5)' : theme.uiBackground
-            }}
-            placeholder="Password"
-            onChangeText={setPassword}
-            onFocus={() => setFocusp(true)}    // ← This!
-            onBlur={() => setFocusp(false)}
-            value={password}
-            secureTextEntry 
-        />
+        <View style={styles.form}>
+            <ThemedText style={styles.title} title={true}>Sign up for your account</ThemedText>
+            <ThemedText style={styles.sub}>Create an account and explore as many books as you wish!</ThemedText>
+            <Spacer />
+            <ThemedTextInput
+                style={{
+                    width: '310', 
+                    marginBottom: 20, 
+                    backgroundColor: focus ? theme.focusuiBackground : theme.uiBackground
+                }}
+                placeholder="Email"
+                keyboardType="email-address"
+                onChangeText={setEmail}
+                onFocus={() => setFocus(true)}   
+                onBlur={() => setFocus(false)}     
+                value={email}
+            />
+            <ThemedTextInput
+                style={{
+                    width: '310', 
+                    marginBottom: 20, 
+                    backgroundColor: focusp ? theme.focusuiBackground : theme.uiBackground
+                }}
+                placeholder="Password"
+                onChangeText={setPassword}
+                onFocus={() => setFocusp(true)} 
+                onBlur={() => setFocusp(false)}
+                value={password}
+                secureTextEntry 
+            />
 
-        <ThemedButton style={{}} onPress={handleSubmit}>
-            <Text style={{color:'white'}}>Register</Text>
-        </ThemedButton>
+            <ThemedButton style={{}} onPress={handleSubmit}>
+                <ThemedBtnText style={{}}>Sign Up</ThemedBtnText>
+            </ThemedButton>
 
-        <Spacer/>
-        {error && <Text style={styles.error}>{error}</Text>}
-        <Link href={'/login'}>
-            <ThemedText style={{ textAlign:'center' }}> Already have an account? Login here</ThemedText>
-        </Link>
+            <Spacer/>
+            {error && <Text style={styles.error}>{error}</Text>}
+            <Link href={'/login'}>
+                <ThemedText style={{ textAlign:'center' }}> Already have an account? Login here</ThemedText>
+            </Link>
+        </View>
     </ThemedView>
     </TouchableWithoutFeedback>
   )
@@ -86,8 +102,11 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     title: {
+        fontFamily: Fonts.semibold,
         fontWeight: 'bold',
-        fontSize: 18,
+        fontSize: 30,
+        top:-90,
+        marginBottom: -70
     },
     error: {
         color: Colors.warning,
@@ -99,5 +118,17 @@ const styles = StyleSheet.create({
         marginHorizontal:10,
         marginBottom:10,
         width: '80%'
+    },
+    sub: {
+        fontFamily: Fonts.semibold,
+        fontSize: 18,
+        width: 250,
+        textAlign: 'center'
+    },
+    form: {
+        // top:-250,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })

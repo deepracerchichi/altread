@@ -17,12 +17,6 @@ export default function ThemedDesign({...props}) {
             style={styles.image}
             {...props}
         />
-
-        {/* <Design 
-           width={width * 0.45}
-            height={height * 0.45}
-            style={styles.twoimage}
-        /> */}
         </View>
     )
 }

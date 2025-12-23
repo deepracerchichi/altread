@@ -1,4 +1,4 @@
-import { Keyboard, StyleSheet, Text, View} from 'react-native'
+import { Keyboard, StyleSheet, Text, useColorScheme, View} from 'react-native'
 import React, { useState } from 'react'
 import ThemedView from '../../components/ThemedView'
 import ThemedText from '../../components/ThemedText'
@@ -16,11 +16,13 @@ import ThemedDesign from '../../components/ThemedDesign'
 
 
 const login = () => {
-    const fontSceme= useFonts
-    // @ts-ignore
-    const font= Fonts[fontSceme];
+
+    const colorScheme=useColorScheme()
+    const theme = Colors[colorScheme] ?? Colors.light
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [focusEmail, setFocusEmail] = useState(false);
+    const [focusPassword, setFocusPassword]= useState(false)
     // @ts-ignore
     const { login} = useUser()
         const handleSubmit = async () => {
@@ -35,30 +37,46 @@ const login = () => {
 
     <ThemedView safe={false} style={styles.container}>
         {/* <Spacer /> */}
-        <ThemedDesign style={{top:-150}}/>
-        <ThemedDesign style={{top:-450, left: 90}}/>
+        {theme === Colors.dark ?
+        <>
+        <ThemedDesign style={{position: 'absolute', top:-150}}/>
+        <ThemedDesign style={{position: 'absolute', top:-190, left: -90}}/>
+        </>
+        :
+        <ThemedDesign style={{position: 'absolute', top:-70, left: -90}}/>
+        
+        }
         <View style={styles.form}>
             <ThemedText style={styles.title} title={true}>Login to your account</ThemedText>
+            {/* <Spacer /> */}
+            <ThemedText style={styles.sub}>Welcome Back. You've been missed!</ThemedText>
             <Spacer />
             <ThemedTextInput 
-                style={{ width:'310', marginBottom: 20}} 
+                style={{ width:'310', marginBottom: 20, backgroundColor: focusEmail? theme.focusuiBackground: theme.uiBackground}} 
                 placeholder="Email" 
                 keyboardType="email-address"
                 onChangeText={setEmail}
                 value={email}
+                onFocus={()=>setFocusEmail(true)}
+                onBlur={()=>setFocusEmail(false)}
             />
 
             <ThemedTextInput
-                style={{width: '310', marginBottom: 20}}
+                style={{width: '310', marginBottom: 20, backgroundColor: focusPassword? theme.focusuiBackground: theme.uiBackground}}
                 placeholder='Password'
                 onChangeText={setPassword}
                 value={password} 
                 secureTextEntry
+                onFocus={()=>setFocusPassword(true)}
+                onBlur={()=>setFocusPassword(false)}
             />
 
             <ThemedButton style={{}} onPress={handleSubmit}>
                 <ThemedBtnText style={{}}>Login</ThemedBtnText>
             </ThemedButton>
+
+            <Spacer />
+
             <Link href={'/register'}>
                 <ThemedText style={{ textAlign:'center' }}> Don't have an account? Register here</ThemedText>
             </Link>
@@ -83,9 +101,16 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 30,
         top:-90,
+        marginBottom: -70
+    },
+    sub:{
+        fontFamily: Fonts.semibold,
+        fontSize: 18,
+        width: 250,
+        textAlign: 'center'
     },
     form: {
-        top:-250,
+        // top:-250,
         flex: 1,
         justifyContent: 'center',
         alignItems:'center',

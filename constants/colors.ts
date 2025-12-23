@@ -10,16 +10,16 @@ export const Colors = {
         iconColor: "#ffffffff",
         iconColorFocused: "#09A1FF",
         uiBackground: "#b0dbf53e",
-        focusuiBackground: "#c2c1c180"
+        focusuiBackground: "#b0dbf580"
     },
     light: {
         text:"#625f72",
         title: "#000000ff",
-        background: "#e0dfe8",
+        background: "#fbfbfcff",
         navBackground: "#e8e7ef",
         iconColor: "#94929cff",
         iconColorFocused: "#000000ff",
-        uiBackground: "#8dd0f9ff",
-        focusuiBackground: "#e5e4f1ff"
+        uiBackground: "#b0dbf53e",
+        focusuiBackground: "#b0dbf580"
     }
 }
