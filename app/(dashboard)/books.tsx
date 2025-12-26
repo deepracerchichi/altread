@@ -7,6 +7,7 @@ import Spacer from "../../components/Spacer"
 import ThemedText from "../../components/ThemedText"
 import ThemedView from "../../components/ThemedView"
 import ThemedCard from "../../components/ThemedCard"
+import { Fonts } from '../../constants/fonts'
 
 const Books = () => {
   // @ts-ignore
@@ -21,7 +22,7 @@ const Books = () => {
         Your Reading List
       </ThemedText>
 
-      <Spacer />
+      {/* <Spacer /> */}
       <FlatList
         data={books}
         keyExtractor={(item) => item.$id}
@@ -48,8 +49,8 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
   },
   heading: {
-    fontWeight: "bold",
-    fontSize: 18,
+    fontFamily: Fonts.semibold,
+    fontSize: 25,
     textAlign: "center",
   },
   list: {

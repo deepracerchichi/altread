@@ -8,6 +8,7 @@ import ThemedButton from '../../components/ThemedButton'
 import { useBooks } from '../../hooks/useBooks'
 import { Colors } from '../../constants/colors'
 import { useRouter } from 'expo-router'
+import ThemedBtnText from '../../components/ThemedBtnText'
 
 const Create = () => {
   const [title, setTitle]= useState('')
@@ -83,9 +84,9 @@ const Create = () => {
         <Spacer />
         
         <ThemedButton style={{}} disabled={loading} onPress={handleSubmit}>
-          <Text style={{ color: '#fff' }}>
+          <ThemedBtnText style={{}}>
             {loading ? "Saving..." : "Create Book"}
-          </Text>
+          </ThemedBtnText>
         </ThemedButton>
 
         

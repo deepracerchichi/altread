@@ -11,13 +11,17 @@ const DashboardLayout = () => {
     const theme = Colors[colorScheme]
   return (
     <UserOnly>
-      <Tabs 
+      <Tabs
           screenOptions={{
               headerShown:false,
               tabBarStyle:{
                   backgroundColor: theme.navBackground,
                   paddingTop:10,
-                  height:90
+                  height:90,
+                  borderTopLeftRadius: 30,
+                  borderTopRightRadius: 30,
+                  position:'absolute',
+                  borderTopWidth:0,
               },
               tabBarActiveTintColor: theme.iconColorFocused,
               tabBarInactiveTintColor: theme.iconColor
