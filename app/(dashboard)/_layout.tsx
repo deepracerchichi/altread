@@ -5,10 +5,11 @@ import { Colors } from '../../constants/colors'
 import {Tabs} from 'expo-router'
 import { Ionicons } from '@expo/vector-icons'
 import UserOnly from '../../components/auth/UserOnly'
+import { useTheme } from '../../contexts/ThemeContext'
 
 const DashboardLayout = () => {
-    const colorScheme = useColorScheme() ?? 'light'
-    const theme = Colors[colorScheme]
+    const { currentTheme } = useTheme()
+    const theme = Colors[currentTheme]
   return (
     <UserOnly>
       <Tabs

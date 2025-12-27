@@ -9,6 +9,7 @@ import { useEffect } from "react"
 
 import * as SplashScreen from "expo-splash-screen"
 import { Starter } from "../components/Starter"
+import { ThemeProvider } from '../contexts/ThemeContext';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -29,19 +30,23 @@ export default function RootLayout() {
   }
 
   return (
-    <UserProvider>
-      <BooksProvider>
-      <StatusBar style="auto" />
-      <Stack screenOptions={{
-        headerStyle: { backgroundColor: theme.navBackground },
-        headerTintColor: theme.title,
-      }}>
-        {/* Individual Screens */}
-        <Stack.Screen name="index" options={{ title: "Home", headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(dashboard)" options={{ headerShown: false }} />
-      </Stack>
-      </BooksProvider>
-    </UserProvider>
+    
+      <UserProvider>
+        <BooksProvider>
+          <ThemeProvider>
+            <StatusBar style="auto" />
+            <Stack screenOptions={{
+              headerStyle: { backgroundColor: theme.navBackground },
+              headerTintColor: theme.title,
+            }}>
+              {/* Individual Screens */}
+              <Stack.Screen name="index" options={{ title: "Home", headerShown: false }} />
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+              <Stack.Screen name="(dashboard)" options={{ headerShown: false }} />
+            </Stack>
+          </ThemeProvider>
+        </BooksProvider>
+      </UserProvider>
+    
   )
 }

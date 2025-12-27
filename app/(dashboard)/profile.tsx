@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, useColorScheme } from 'react-native'
+import { StyleSheet, Text, View, Image } from 'react-native'
 import React, { useState } from 'react'
 import ThemedView from '../../components/ThemedView'
 import ThemedText from '../../components/ThemedText'
@@ -12,36 +12,65 @@ import Avatar from '../../components/Avatar'
 import Hamburger from '../../components/Hamburger'
 import { Colors } from '../../constants/colors'
 import { Ionicons } from '@expo/vector-icons'
-import { useEffect } from 'react'
-import ThemedCard from '../../components/ThemedCard'
-
-
-
-
+import { useTheme } from '../../contexts/ThemeContext'
 
 const Profile = () => {
   // @ts-ignore
   const {logout, user} = useUser()
   const [open, setOpen] = useState(false)
-  const colortheme= useColorScheme()
-  const theme = Colors[colortheme] ?? Colors.light
-
-  
+  const { themeMode, currentTheme, setThemeMode } = useTheme()
+  const theme = Colors[currentTheme]
 
   const handlePress = () => {
     setOpen((prevopen)=> (!prevopen))
   }
+
+  const handleTheme = () => {
+    // Cycle through: auto -> light -> dark -> auto
+    if (themeMode === 'auto') {
+      setThemeMode('light')
+    } else if (themeMode === 'light') {
+      setThemeMode('dark')
+    } else {
+      setThemeMode('auto')
+    }
+    setOpen(false) // Close popup after selection
+  }
+
+  const getThemeIcon = () => {
+    if (themeMode === 'auto') {
+      return <Ionicons name='phone-portrait-outline' size={24} color={theme.title} />
+    } else if (themeMode === 'dark') {
+      return <Ionicons name='moon' size={24} color={theme.title} />
+    } else {
+      return <Ionicons name='sunny' size={24} color={theme.title} />
+    }
+  }
+
+  const getThemeLabel = () => {
+    if (themeMode === 'auto') return 'Auto'
+    if (themeMode === 'dark') return 'Dark'
+    return 'Light'
+  }
   
   return (
     <ThemedView style={styles.container} safe={true}>
-      {/* <Spacer /> */}
       <ThemedView style={styles.hamburger}>
         <Hamburger style={styles.hamburger} onPress={handlePress}/>
         {open && (
           <ThemedView style={styles.popupContainer}>
-            <ThemedButton style={styles.popup}><ThemedText style={styles.popuptext}>Notifications</ThemedText></ThemedButton>
-            <ThemedButton style={styles.popup} ><ThemedText style={styles.popuptext}>Theme: {colortheme==='dark'? (<Ionicons name='moon-outline' size={24} color={theme.title} />) : (<Ionicons name='sunny-outline' size={24} color={theme.title} />)}</ThemedText></ThemedButton>
-            <ThemedButton style={styles.popup}><ThemedText style={styles.popuptext}></ThemedText></ThemedButton>
+            <ThemedButton style={styles.popup}>
+              <ThemedText style={styles.popuptext}>Edit Profile</ThemedText>
+            </ThemedButton>
+            <ThemedButton style={styles.popup} onPress={handleTheme}>
+              <ThemedView style={{flexDirection: 'row', alignItems: 'center', gap: 8}}>
+                <ThemedText style={styles.popuptext}>Theme: {getThemeLabel()}</ThemedText>
+                {getThemeIcon()}
+              </ThemedView>
+            </ThemedButton>
+            <ThemedButton style={styles.popup}>
+              <ThemedText style={styles.popuptext}>Settings</ThemedText>
+            </ThemedButton>
           </ThemedView>
         )}
       </ThemedView>
@@ -69,12 +98,8 @@ const Profile = () => {
 export default Profile
 
 const styles = StyleSheet.create({
-
     container: {
         flex: 1,
-        // alignItems: 'center',
-        // justifyContent: 'center',
-        
     },
     header: {
         fontFamily: Fonts.regular,
@@ -97,21 +122,20 @@ const styles = StyleSheet.create({
       borderRadius: 8,
       width:150,
       backgroundColor: '#ffffffff'
-      
     },
     popuptext: {
       fontSize: 16,
     },
     popupContainer: {
       position: 'absolute',
-      top: 50, // Adjust based on your hamburger button height
+      top: 50,
       left: 10,
       right: 0,
       marginHorizontal: 10,
       borderRadius: 10,
       padding: 20,
-      elevation: 5, // Android shadow
-      shadowColor: '#000', // iOS shadow
+      elevation: 5,
+      shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.25,
       shadowRadius: 3.84,
@@ -125,6 +149,5 @@ const styles = StyleSheet.create({
       height: '100%',
       resizeMode: 'cover',
       alignSelf: 'center',
-      
     }
 })

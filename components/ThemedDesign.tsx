@@ -2,11 +2,14 @@ import { StyleSheet, useColorScheme, useWindowDimensions, View } from "react-nat
 import LightDesign from "../assets/img/ellipse.svg"
 import DarkDesign from "../assets/img/ellipse2.svg"
 import ThemedView from "./ThemedView"
+import { Colors } from "../constants/colors"
+import { useTheme } from "../contexts/ThemeContext"
 
 export default function ThemedDesign({...props}) {
-    const colorScheme = useColorScheme()
+    const { currentTheme } = useTheme() // Use this instead
+    const theme = Colors[currentTheme]
     const {width, height} = useWindowDimensions()
-    const Design = colorScheme === "dark" ? DarkDesign : LightDesign
+    const Design = currentTheme === "dark" ? DarkDesign : LightDesign
 
     return (
         // @ts-ignore

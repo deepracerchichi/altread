@@ -3,12 +3,15 @@ import React from 'react'
 import DarkLogo from '../assets/img/logo_dark.svg'
 import LightLogo from '../assets/img/logo_light.svg'
 import ThemedView from './ThemedView'
+import { Colors } from '../constants/colors'
+import { useTheme } from '../contexts/ThemeContext'
 
 const ThemedLogo = ({...props}) => {
-    const colorScheme= useColorScheme()
+    const { currentTheme } = useTheme() // Use this instead
+    const theme = Colors[currentTheme]
     const { width, height } = useWindowDimensions()
 
-    const Logo = colorScheme=== 'dark' ? DarkLogo : LightLogo
+    const Logo = currentTheme=== 'dark' ? DarkLogo : LightLogo
   return (
     <ThemedView>
       
